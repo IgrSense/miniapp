@@ -2342,3 +2342,84 @@ h2 {
     height: 1px;
     background: rgba(255, 217, 141, 0.2);
 }
+
+/* Стили для дополнительных функций */
+.additional-features-select {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.feature-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255, 217, 141, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-option:hover {
+    border-color: rgba(255, 217, 141, 0.3);
+    transform: translateY(-2px);
+    background: rgba(18, 18, 18, 0.98);
+}
+
+/* Кастомный чекбокс */
+.feature-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(255, 217, 141, 0.3);
+    border-radius: 6px;
+    background: rgba(255, 217, 141, 0.05);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.feature-option input[type="checkbox"]:checked {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+.feature-option input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: #000;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Текст опции */
+.feature-text {
+    flex-grow: 1;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Цена */
+.feature-price {
+    font-size: 16px;
+    color: var(--color-gold);
+    font-weight: 500;
+    padding-left: 15px;
+    border-left: 1px solid rgba(255, 217, 141, 0.1);
+}
+
+/* Анимация при наведении */
+.feature-option:hover input[type="checkbox"] {
+    border-color: rgba(255, 217, 141, 0.5);
+}
+
+/* Состояние при нажатии */
+.feature-option:active {
+    transform: scale(0.98);
+}
