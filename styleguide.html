@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гайдлайн Шаблон</title>
+    <style>
+        /* ============================================================
+                           Общие стили
+        ============================================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&family=Unbounded:wght@400;600;800&display=swap');
+
+        :root {
+            --color-gold: #FDD782;
+            --color-purple: #8A2BE2;
+            --color-pink: #FF69B4;
+            --color-dark-bg: #121212;
+            --color-dark-bg-secondary: #1a1a1a;
+            --color-white: rgba(255, 255, 255, 0.9);
+            --color-white-secondary: rgba(255, 255, 255, 0.05);
+            --color-border: rgba(255, 255, 255, 0.1);
+            --transition-speed: 0.3s;
+            --font-primary: 'Manrope', sans-serif;
+            --font-secondary: 'Unbounded', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+            color: var(--color-white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================================
+                              Навигация
+        ============================================================ */
+        header.header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(18, 18, 18, 0.8);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header.header .logo {
+            width: 150px;
+        }
+
+        header.header .burger-menu {
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            display: none;
+        }
+
+        header.header nav.menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        header.header nav.menu a {
+            color: #ffffff;
+            font-size: 16px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        header.header nav.menu a:hover {
+            color: var(--color-gold);
+        }
+
+        @media (max-width: 768px) {
+            header.header .burger-menu {
+                display: block;
+            }
+
+            header.header nav.menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 40px;
+                background: rgba(18, 18, 18, 0.95);
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            header.header nav.menu.active {
+                display: flex;
+            }
+        }
+
+        /* ============================================================
+                              Геройская секция
+        ============================================================ */
+        section.hero-section {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 80px; /* Учитываем фиксированный хедер */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+        }
+
+        section.hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.15), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        section.hero-section .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-chips {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-chip {
+            font-size: 14px;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            transition: all var(--transition-speed) ease;
+            cursor: default;
+        }
+
+        .hero-chip:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-secondary);
+            font-size: 55px;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, var(--color-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 19px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0 auto 20px auto;
+            max-width: 800px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-button, .ccta-button {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            color: #ffffff;
+            background: linear-gradient(45deg, var(--color-purple), #FB95AB, var(--color-gold));
+            background-size: 200% 200%;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.25);
+            position: relative;
+            overflow: hidden;
+            animation: gradientFlow 8s ease infinite;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button::before, .ccta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover, .ccta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.4);
+        }
+
+        .cta-button:hover::before, .ccta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active, .ccta-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            margin: -120px auto 0;
+            border-radius: 20px;
+            opacity: 0.99;
+            mix-blend-mode: lighten;
+            transition: all 0.5s ease;
+            transform: perspective(1000px) rotateX(5deg);
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(138, 43, 226, 0.3);
+        }
+
+        /* ============================================================
+                             Продуктовый калькулятор
+        ============================================================ */
+        section.product-calc {
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+            padding: 80px 0;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section.product-calc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(138, 43, 226, 0.15), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .product-calc__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-calc__header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .product-calc__title {
+            font-family: var(--font-secondary);
+            font-size: 42px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, var(--color-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .product-calc__subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .product-calc__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-calc__params {
+            width: 100%;
+        }
+
+        .product-calc__results {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-calc__result {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            border: 2px solid var(--color-border);
+            transition: all 0.4s ease;
+            cursor: default;
+        }
+
+        .product-calc__result:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ============================================================
+                               Секция Ценообразования
+        ============================================================ */
+        section.pricing-section {
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section.pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.15), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--color-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-header {
+            margin-bottom: 30px;
+        }
+
+        .pricing-title {
+            font-size: 42px;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            font-family: var(--font-secondary);
+        }
+
+        .pricing-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .pricing-options {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .price-option {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            flex: 1;
+            transition: all var(--transition-speed) ease;
+            cursor: default;
+        }
+
+        .price-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .price-amount {
+            font-size: 36px;
+            color: var(--color-gold);
+            font-family: var(--font-secondary);
+            margin-bottom: 10px;
+        }
+
+        .price-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .social-proof {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(253, 215, 130, 0.1);
+            border-radius: 12px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .spots-left {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 8px;
+            color: var(--color-gold);
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .cta-button-container {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-options {
+                flex-direction: column;
+            }
+
+            .pricing-title {
+                font-size: 32px;
+            }
+
+            .pricing-subtitle {
+                font-size: 18px;
+            }
+
+            .price-amount {
+                font-size: 32px;
+            }
+        }
+
+        /* ============================================================
+                            Секция Автор курса
+        ============================================================ */
+        section#course-author {
+            background-color: var(--color-dark-bg);
+            color: #ffffff;
+            padding: 60px 0;
+        }
+
+        section#course-author .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        section#course-author .author-image {
+            flex-shrink: 0;
+            width: 300px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        section#course-author .author-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        section#course-author h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-family: var(--font-secondary);
+            background: linear-gradient(45deg, #ffffff, var(--color-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: left;
+        }
+
+        section#course-author h3 {
+            font-size: 28px;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        section#course-author ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        section#course-author li {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        section#course-author li::before {
+            content: '✦';
+            color: var(--color-gold);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        @media (max-width: 768px) {
+            section#course-author .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            section#course-author .author-image {
+                width: 100%;
+                height: auto;
+                max-width: 300px;
+            }
+
+            section#course-author h2 {
+                font-size: 32px;
+                text-align: center;
+            }
+
+            section#course-author h3 {
+                font-size: 24px;
+            }
+
+            section#course-author li {
+                font-size: 16px;
+            }
+        }
+
+        /* ============================================================
+                        Секция Результатов Курса
+        ============================================================ */
+        section#course-results {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+            color: #ffffff;
+        }
+
+        section#course-results .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section#course-results h2 {
+            text-align: center;
+            font-family: var(--font-secondary);
+            font-size: 42px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ffffff, var(--color-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--color-border);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
+        }
+
+        .result-card h3 {
+            font-size: 24px;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            font-family: var(--font-secondary);
+        }
+
+        .result-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-card li {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            padding-left: 28px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: left;
+        }
+
+        .result-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-gold);
+            font-weight: bold;
+        }
+
+        /* ============================================================
+                               Кнопки CTA
+        ============================================================ */
+        .cta-button, .ccta-button {
+            /* Общие стили уже заданы выше */
+        }
+
+        /* ============================================================
+                            Другие Компоненты
+        ============================================================ */
+        /* Добавьте здесь стили для других компонентов, таких как калькулятор, отзывы, карточки и т.д. */
+
+        /* Пример отзывов */
+        section.testimonials {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
+            color: #ffffff;
+        }
+
+        section.testimonials .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--color-border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--color-dark-bg);
+            margin-bottom: 10px;
+        }
+
+        .testimonial-result {
+            font-size: 15px;
+            color: var(--color-gold);
+            font-weight: 600;
+            padding: 12px 20px;
+            background: rgba(253, 215, 130, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            section.testimonials .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+                              Навигация
+    ============================================================ -->
+    <header class="header">
+        <img src="https://static.tildacdn.com/tild3630-3930-4837-b431-363832363064/photo.svg" alt="Логотип" class="logo">
+        <button class="burger-menu" onclick="toggleMenu()">≡</button>
+        <nav class="menu">
+            <a href="#intro">О курсе</a>
+            <a href="#benefits">Преимущества</a>
+            <a href="#course-content">Программа</a>
+            <a href="#pricing">Цены</a>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+                              Геройская секция
+    ============================================================ -->
+    <section class="hero-section" id="hero">
+        <div class="hero-content">
+            <div class="hero-chips">
+                <span class="hero-chip">Онлайн-тренинг</span>
+                <span class="hero-chip">4 недели</span>
+                <span class="hero-chip">Старт 15 ноября</span>
+                <span class="hero-chip">год коммьюнити</span>
+            </div>
+            <h1>ПРОМПТ-<span style="color: rgb(249, 176, 4);">ПРОГРАММИСТ</span></h1>
+            <p>Создавай прибыльные IT-продукты за дни, а не месяцы. AI делает код, ты получаешь деньги. Никакого классического программирования.</p>
+            <a onclick="bubble_fn_btn(3)" class="cta-button">Стать создателем продуктов</a>
+        </div>
+        <img src="https://760fb20e6dfc17ff5d4859e27432c8da.cdn.bubble.io/f1730003006220x141992797322370910/image%20%283%29.png" alt="Hero Image" class="hero-image">
+    </section>
+
+    <!-- ============================================================
+                             Секция Продуктового Калькулятора
+    ============================================================ -->
+    <section class="product-calc" id="product-calc">
+        <div class="product-calc__container">
+            <div class="product-calc__header">
+                <h2 class="product-calc__title">Product Calculator</h2>
+                <p class="product-calc__subtitle">Calculate your product potential...</p>
+            </div>
+            <div class="product-calc__content">
+                <div class="product-calc__params">
+                    <!-- Здесь разместите поля ввода и параметры калькулятора -->
+                </div>
+                <div class="product-calc__results">
+                    <div class="product-calc__result">
+                        <h3>Результат 1</h3>
+                        <!-- Содержимое результата -->
+                    </div>
+                    <div class="product-calc__result">
+                        <h3>Результат 2</h3>
+                        <!-- Содержимое результата -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+                                Секция Ценообразования
+    ============================================================ -->
+    <section class="pricing-section" id="pricing">
+        <div class="pricing-container">
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h2 class="pricing-title">Инвестируй в свой апгрейд 🚀</h2>
+                    <p class="pricing-subtitle">
+                        Пока другие думают "как это работает?", 
+                        ты уже будешь знать "как на этом заработать"
+                    </p>
+                </div>
+
+                <div class="pricing-options">
+                    <div class="price-option">
+                        <div class="price-amount">$690</div>
+                        <div class="price-description">
+                            Полный доступ<br>
+                            Единый платёж
+                        </div>
+                    </div>
+                    <div class="price-option">
+                        <div class="price-amount">$50</div>
+                        <div class="price-description">
+                            В месяц<br>
+                            Рассрочка 0%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-proof">
+                    "Я думал, это дорого, пока не заработал первые $2000 через месяц после курса"
+                    <br>— Александр, выпускник прошлого потока
+                </div>
+                <div class="cta-button-container">
+                    <a onclick="bubble_fn_btn(4)" class="ccta-button">Присоединиться к курсу</a>
+                </div>
+                <div class="spots-left">
+                    Осталось 22 места на текущий поток
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+                             Секция Автор курса
+    ============================================================ -->
+    <section id="course-author">
+        <div class="container">
+            <img src="https://via.placeholder.com/300x450" alt="Author Image" class="author-image">
+            <div class="author-info">
+                <h2>Имя Автора</h2>
+                <h3>Должность Автора</h3>
+                <ul>
+                    <li>Опыт 1</li>
+                    <li>Опыт 2</li>
+                    <li>Опыт 3</li>
+                    <li>Опыт 4</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+                             Секция Результатов Курса
+    ============================================================ -->
+    <section id="course-results">
+        <div class="container">
+            <h2>Результат после курса</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>💼 Готовое портфолио</h3>
+                    <ul>
+                        <li>3 реальных проекта с использованием ИИ и NoCode</li>
+                        <li>Рабочие приложения, которые можно показать клиентам</li>
+                        <li>Опыт работы с современными инструментами</li>
+                        <li>Готовые шаблоны для презентации проектов</li>
+                        <li>Профиль на GitHub с открытым кодом</li>
+                    </ul>
+                </div>
+                <div class="result-card">
+                    <h3>🚀 Навыки будущего</h3>
+                    <ul>
+                        <li>Создание MVP за 2-3 дня вместо месяцев</li>
+                        <li>Работа с нейросетями на уровне PRO</li>
+                        <li>Автоматизация рутинных задач</li>
+                        <li>Быстрая разработка на современных платформах</li>
+                        <li>Умение находить оптимальные технические решения</li>
+                    </ul>
+                </div>
+                <div class="result-card">
+                    <h3>💰 Возможности заработка</h3>
+                    <ul>
+                        <li>Готовые каналы поиска первых клиентов</li>
+                        <li>Навыки оценки и продажи своих услуг</li>
+                        <li>Понимание рынка и актуальных ниш</li>
+                        <li>Способы получения оплаты из любой точки мира</li>
+                        <li>Возможность создать свой продуктовый бизнес</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+                           Секция Отзывов
+    ============================================================ -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Отзывы выпускников</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">А</div>
+                    <div class="testimonial-text">
+                        "Курс изменил мою жизнь! Я смог заработать первые деньги уже через месяц."
+                    </div>
+                    <div class="testimonial-result">💼 Результат</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">Б</div>
+                    <div class="testimonial-text">
+                        "Отличный материал и поддержка! Теперь я уверен в своих навыках."
+                    </div>
+                    <div class="testimonial-result">🚀 Прогресс</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">В</div>
+                    <div class="testimonial-text">
+                        "Рекомендую всем, кто хочет быстро освоить программирование с помощью AI."
+                    </div>
+                    <div class="testimonial-result">💰 Заработок</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+                            Скрипты
+    ============================================================ -->
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            menu.classList.toggle('active');
+        }
+
+        function bubble_fn_btn(id) {
+            // Добавьте здесь вашу логику для обработки нажатий кнопок
+            console.log('Button clicked with ID:', id);
+        }
+    </script>
+</body>
+</html>
