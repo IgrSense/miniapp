@@ -315,8 +315,8 @@ h2 {
 .for-who-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    max-width: 900px;
+    gap: 35px;
+    max-width: 1035px;
     margin: 40px auto 0;
     position: relative;
     z-index: 2;
@@ -325,11 +325,12 @@ h2 {
 .for-who-card {
     background: rgba(18, 18, 18, 0.95);
     border: 1px solid var(--color-border);
-    border-radius: 20px;
-    padding: 30px;
+    border-radius: 23px;
+    padding: 35px;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    min-height: 460px;
 }
 
 .for-who-card:hover {
@@ -340,40 +341,40 @@ h2 {
 
 .card-icon {
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-bottom: 23px;
     background: rgba(255, 255, 255, 0.03);
-    width: 60px;
-    height: 60px;
+    width: 69px;
+    height: 69px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
 .for-who-card h3 {
     font-size: 24px;
     color: var(--color-gold);
-    margin-bottom: 15px;
+    margin-bottom: 17px;
 }
 
 .for-who-card p {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 20px;
+    margin-bottom: 23px;
     line-height: 1.5;
 }
 
 .for-who-card ul {
     list-style: none;
-    margin-bottom: 20px;
+    margin-bottom: 23px;
     flex-grow: 1;
 }
 
 .for-who-card ul li {
     font-size: 15px;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 12px;
-    padding-left: 24px;
+    margin-bottom: 14px;
+    padding-left: 28px;
     position: relative;
     line-height: 1.4;
 }
@@ -387,8 +388,8 @@ h2 {
 
 .card-benefit {
     background: rgba(255, 255, 255, 0.03);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 17px;
+    border-radius: 14px;
     margin-top: auto;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.9);
@@ -1658,11 +1659,10 @@ h2 {
 }
 
 .advantage-preview {
-    height: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 15px;
 }
 
 .advantage-content {
@@ -1670,7 +1670,7 @@ h2 {
 }
 
 .advantage-content h3 {
-    font-size: 20px;
+    font-size: 24px;
     color: var(--color-white);
     margin-bottom: 10px;
 }
@@ -1678,18 +1678,15 @@ h2 {
 .advantage-price {
     font-size: 16px;
     color: var(--color-gold);
-    margin-top: auto;
 }
 
 .advantage-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    justify-content: center;
 }
 
 .details-btn {
-    flex: 1;
-    padding: 10px;
+    padding: 10px 24px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -1699,18 +1696,10 @@ h2 {
     transition: all 0.3s ease;
 }
 
-.bookmark-btn {
-    width: 38px;
-    padding: 10px;
-    background: var(--color-gold);
-    border: none;
-    border-radius: 12px;
-    color: var(--color-dark-bg);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.details-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
 }
 
 /* Медиа-запросы */
@@ -1777,13 +1766,11 @@ h2 {
 
 .advantage-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    justify-content: center;
 }
 
 .details-btn {
-    flex: 1;
-    padding: 10px;
+    padding: 10px 24px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -1793,18 +1780,10 @@ h2 {
     transition: all 0.3s ease;
 }
 
-.bookmark-btn {
-    width: 38px;
-    padding: 10px;
-    background: var(--color-gold);
-    border: none;
-    border-radius: 12px;
-    color: var(--color-dark-bg);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.details-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
 }
 
 /* Скрытый контент */
