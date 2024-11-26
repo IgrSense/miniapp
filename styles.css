@@ -1651,63 +1651,73 @@ h2 {
 }
 
 .advantage-card {
-    background: rgba(18, 18, 18, 0.95);
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
+    border: 1px solid rgba(255, 217, 141, 0.1);
+    border-radius: 24px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    height: 180px; /* Фиксированная высота */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 200px;
+    backdrop-filter: blur(10px);
+    position: relative;
 }
 
 .advantage-preview {
-    padding: 25px;
+    padding: 35px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .advantage-content {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    gap: 20px;
 }
 
 .advantage-content h3 {
-    font-size: 28px;
-    color: var(--color-white);
-    margin-bottom: 15px;
+    font-size: 32px;
+    color: #ffffff;
     font-family: var(--font-secondary);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 .advantage-price {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--color-gold);
-    margin-top: auto; /* Выравнивает все золотые тексты по одной линии */
+    font-weight: 500;
 }
 
 .advantage-buttons {
-    display: flex;
-    justify-content: center;
+    margin-top: auto;
 }
 
 .details-btn {
     width: 100%;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    color: var(--color-white);
-    font-size: 14px;
+    padding: 14px 28px;
+    background: rgba(255, 217, 141, 0.05);
+    border: 1px solid rgba(255, 217, 141, 0.2);
+    border-radius: 14px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
 .details-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-gold);
+    background: rgba(255, 217, 141, 0.1);
+    border-color: rgba(255, 217, 141, 0.4);
     transform: translateY(-2px);
+}
+
+.advantage-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 217, 141, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Медиа-запросы */
