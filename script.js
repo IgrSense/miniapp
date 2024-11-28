@@ -176,12 +176,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!wrapper || !slides.length) return;
 
         let currentSlide = 0;
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
-
         let touchStartX = 0;
         let touchEndX = 0;
+        let isSwiping = false;
 
         // Создаем точки для навигации
         slides.forEach((_, index) => {
@@ -210,35 +207,28 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.slider-dot').forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === currentSlide);
             });
-
-            // Сбрасываем значения touchStart и touchEnd после каждого слайда
-            touchStartX = 0;
-            touchEndX = 0;
         }
 
         // Обработчики для стрелок (десктоп)
         if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => {
-                goToSlide(currentSlide - 1);
-            });
-
-            nextBtn.addEventListener('click', () => {
-                goToSlide(currentSlide + 1);
-            });
+            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
         }
 
         // Обработчики для свайпов (мобильные)
         wrapper.addEventListener('touchstart', e => {
             touchStartX = e.touches[0].clientX;
-            e.preventDefault(); // Предотвращаем стандартное поведение
-        });
+            isSwiping = true;
+        }, { passive: true });
 
         wrapper.addEventListener('touchmove', e => {
+            if (!isSwiping) return;
             touchEndX = e.touches[0].clientX;
-            e.preventDefault(); // Предотвращаем стандартное поведение
-        });
+        }, { passive: true });
 
         wrapper.addEventListener('touchend', () => {
+            if (!isSwiping) return;
+            
             const swipeDistance = touchStartX - touchEndX;
             const threshold = 50; // Минимальное расстояние для свайпа
 
@@ -249,6 +239,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     goToSlide(currentSlide - 1);
                 }
             }
+
+            // Сбрасываем состояние свайпа
+            isSwiping = false;
+            touchStartX = 0;
+            touchEndX = 0;
         });
 
         // Показываем первый слайд
