@@ -28,6 +28,8 @@ body {
     background: linear-gradient(135deg, var(--color-dark-bg), var(--color-dark-bg-secondary));
     color: var(--color-white);
     line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 a {
@@ -55,7 +57,7 @@ header.header {
 }
 
 header.header .logo {
-    width: 150px;
+    width: 30px;
 }
 
 header.header .burger-menu {
@@ -690,7 +692,7 @@ h2 {
     transform: translateY(-2px);
 }
 
-/* С��или для разны�� тарифов */
+/* Сили для разны тарифов */
 .pricing-card:first-child {
     background: rgba(18, 18, 18, 0.95);
     border: 1px solid var(--color-border);
@@ -2452,4 +2454,151 @@ h2 {
     font-size: 14px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Делаем контейнер на всю ширину */
+    .container {
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    /* Адаптируем навигацию */
+    .nav {
+        flex-direction: column;
+    }
+
+    /* Настраиваем размер текста */
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    /* Изображения адаптируются под размер экрана */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    /* Дополнительные корректировки */
+    .nav {
+        padding: 10px;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    body {
+        min-width: 320px; /* Минимальная ширина для самых маленьких экранов */
+    }
+}
+
+/* Базовые стили */
+body {
+    overflow-x: hidden; /* Предотвращаем горизонтальный скролл */
+    width: 100%;
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Делаем контейнер на всю ширину */
+    .container {
+        width: 100%;
+        padding: 0 15px;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    /* Фиксим секции */
+    section {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    /* Адаптируем карточки */
+    .case-card,
+    .service-card,
+    .pricing-card,
+    .advantage-card {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Убираем лишние отступы */
+    .hero-section,
+    .benefits-section,
+    .process-section,
+    .why-us-section,
+    .contact {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    body {
+        min-width: 320px; /* Минимальная ширина для самых маленьких экранов */
+    }
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Базовые исправления */
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Растягиваем все секции на полную ширину */
+    section {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    /* Контейнер на всю ширину */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 15px;
+        margin: 0;
+    }
+
+    /* Фиксим карточки кейсов */
+    .case-card {
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+    }
+
+    /* Исправляем медиа в карточках */
+    .case-media {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Растягиваем хедер */
+    header.header {
+        width: 100vw;
+        left: 0;
+        padding: 20px 15px;
+    }
 }
