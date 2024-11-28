@@ -322,16 +322,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            console.log('Form submitted'); // Проверяем, срабатывает ли событие
             
             // Получаем значения полей
             const productType = document.getElementById('productType')?.value;
             const telegram = document.querySelector('input[name="telegram"]')?.value;
             const email = document.querySelector('input[name="email"]')?.value;
             const phone = document.querySelector('input[name="phone"]')?.value;
-            const message = document.querySelector('textarea[name="message"]')?.value;
-
-            console.log('Form data:', { productType, telegram, email, phone, message }); // Проверяем данные
+            const message = document.querySelector('textarea[name="message"]')?.value || '';
 
             // Создаем объект с данными формы
             const formData = {
@@ -343,6 +340,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 source: 'landing_form',
                 timestamp: new Date().toISOString()
             };
+
+            console.log('Sending form data:', formData); // Добавляем лог для отладки
 
             try {
                 console.log('Sending data:', formData);
