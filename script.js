@@ -169,11 +169,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function initCasesSlider() {
         const wrapper = document.querySelector('.cases-wrapper');
         const slides = document.querySelectorAll('.case-card');
-        const prevBtn = document.querySelector('.slider-prev');
-        const nextBtn = document.querySelector('.slider-next');
         const dotsContainer = document.querySelector('.slider-dots');
         
         if (!wrapper || !slides.length) return;
+
+        // Создаем кнопки навигации, если их нет
+        let prevBtn = document.querySelector('.slider-prev');
+        let nextBtn = document.querySelector('.slider-next');
+        
+        if (!prevBtn || !nextBtn) {
+            const controls = document.createElement('div');
+            controls.className = 'slider-controls';
+            
+            prevBtn = document.createElement('button');
+            prevBtn.className = 'slider-prev';
+            
+            nextBtn = document.createElement('button');
+            nextBtn.className = 'slider-next';
+            
+            controls.appendChild(prevBtn);
+            controls.appendChild(nextBtn);
+            
+            wrapper.parentElement.appendChild(controls);
+        }
 
         let currentSlide = 0;
         let touchStartX = 0;
@@ -209,11 +227,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Обработчики для стрелок (десктоп)
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-        }
+        // Обновляем обработчики для кнопок
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Предотвращаем всплытие события
+            goToSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Предотвращаем всплытие события
+            goToSlide(currentSlide + 1);
+        });
 
         // Обработчики для свайпов (мобильные)
         wrapper.addEventListener('touchstart', e => {

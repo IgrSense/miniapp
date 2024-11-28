@@ -3169,7 +3169,7 @@ body {
     border-radius: 4px;
 }
 
-/* Обновленные стили для кейсов на мобильных устройствах */
+/* Обновленные стили для кейсов на мобильных устройс��вах */
 @media screen and (max-width: 768px) {
     .case-card {
         flex-direction: column;
@@ -3389,5 +3389,56 @@ body {
         max-width: 100%; /* Максимальная ширина */
         max-height: 100%; /* Максимальная высота */
         margin: auto; /* Дополнительное центрирование */
+    }
+}
+
+/* Навигация слайдера для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .slider-controls {
+        position: absolute;
+        top: 25%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        pointer-events: none; /* Чтобы не мешать свайпам */
+        z-index: 10;
+    }
+
+    .slider-prev,
+    .slider-next {
+        display: flex; /* Показываем стрелки */
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(18, 18, 18, 0.8);
+        border: 1px solid var(--color-gold);
+        border-radius: 50%;
+        color: var(--color-gold);
+        cursor: pointer;
+        pointer-events: auto; /* Возвращаем возможность клика */
+        transition: all 0.3s ease;
+    }
+
+    .slider-prev:hover,
+    .slider-next:hover {
+        background: rgba(18, 18, 18, 0.95);
+        transform: scale(1.1);
+    }
+
+    .slider-preve {
+        content: '←';
+    }
+
+    .slider-next {
+        content: '→';
+    }
+
+    /* Убираем старый индикатор свайпа */
+    .cases-wrapper::after {
+        display: none;
     }
 }
