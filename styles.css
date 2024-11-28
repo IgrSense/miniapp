@@ -1044,7 +1044,7 @@ h2 {
 }
 
 .case-media video {
-    width: 100%;
+    width: 60%;
     height: 100%;
     object-fit: contain;
     border-radius: 12px;
@@ -2695,7 +2695,7 @@ body {
 
     .case-media img,
     .case-media video {
-        height: 100%;
+        height: 60%;
         width: 100%;
         object-fit: contain;
     }
@@ -2757,6 +2757,19 @@ body {
 
     .case-description ul {
         columns: 1;
+    }
+}
+
+    .case-header h3 {
+        font-size: 20px;
+    }
+
+    .case-stats {
+        padding: 12px;
+    }
+
+    .case-stats .stat-number {
+        font-size: 18px;
     }
 }
 
@@ -2824,6 +2837,7 @@ body {
     .contact-form textarea {
         margin-bottom: 30px;
     }
+}
 
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
@@ -3154,4 +3168,231 @@ body {
 .modal-content::-webkit-scrollbar-thumb {
     background: var(--color-gold);
     border-radius: 4px;
+}
+
+/* Обновленные стили для кейсов на мобильных устройствах */
+@media screen and (max-width: 768px) {
+    .case-card {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        min-height: auto;
+    }
+
+    /* Медиа контейнер */
+    .case-media {
+        flex: none;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 9/16; /* Мобильное соотношение сторон */
+        max-height: 60vh;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .case-media video,
+    .case-media img {
+        width: 60%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Контент */
+    .case-content {
+        padding: 0;
+    }
+
+    .case-header h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* Теги */
+    .case-tags {
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .case-tag {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    /* Описание */
+    .case-description p {
+        font-size: 14px;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .case-description ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 15px;
+        margin-bottom: 20px;
+    }
+
+    .case-description li {
+        font-size: 13px;
+        line-height: 1.4;
+        padding-left: 15px;
+    }
+
+    .case-description li::before {
+        font-size: 12px;
+    }
+
+    /* Статистика */
+    .case-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        margin-top: auto;
+    }
+
+    .case-stats .stat {
+        text-align: center;
+    }
+
+    .case-stats .stat-number {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    .case-stats .stat-label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Навигация слайдера */
+    .slider-controls {
+        margin-top: -20px;
+    }
+
+    .slider-prev,
+    .slider-next {
+        display: none; /* Скрываем стрелки на мобильных */
+    }
+
+    .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 0;
+    }
+
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .slider-dot.active {
+        width: 24px;
+        background: var(--color-gold);
+    }
+
+    /* Добавляем индикатор свайпа */
+    .cases-wrapper::after {
+        content: '';
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        animation: swipeHint 1.5s ease-in-out infinite;
+    }
+
+    @keyframes swipeHint {
+        0% { transform: translateX(-70%); opacity: 0; }
+        50% { transform: translateX(-50%); opacity: 1; }
+        100% { transform: translateX(-30%); opacity: 0; }
+    }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .case-description ul {
+        grid-template-columns: 1fr; /* Один столбец на маленьких экранах */
+    }
+
+    .case-media {
+        max-height: 50vh;
+    }
+
+    .case-header h3 {
+        font-size: 20px;
+    }
+
+    .case-stats {
+        padding: 12px;
+    }
+
+    .case-stats .stat-number {
+        font-size: 18px;
+    }
+}
+
+/* Стили для кейса AI-официант */
+.case-card[data-case="ai-waiter"] .case-media {
+    display: flex;
+    gap: 20px;
+    flex: 0 0 50%; /* Увеличиваем ширину медиа-контейнера */
+    max-width: none;
+}
+
+.case-card[data-case="ai-waiter"] .case-media video {
+    width: 45%; /* Видео занимает 45% от медиа-контейнера */
+    height: auto;
+    object-fit: contain;
+}
+
+.case-card[data-case="ai-waiter"] .case-media-slider {
+    width: 45%; /* Слайдер занимает 45% от медиа-контейнера */
+}
+
+/* Стили для кейса эфирных масел */
+.case-card[data-case="essential-oils"] .case-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 40%;
+}
+
+.case-card[data-case="essential-oils"] .case-media-slider {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.case-card[data-case="essential-oils"] .case-slide {
+    margin: 0 auto;
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* AI-официант на мобильных */
+    .case-card[data-case="ai-waiter"] .case-media {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .case-card[data-case="ai-waiter"] .case-media video,
+    .case-card[data-case="ai-waiter"] .case-media-slider {
+        width: 80%;
+    }
+
+    /* Эфирные масла на мобильных */
+    .case-card[data-case="essential-oils"] .case-media-slider {
+        width: 80%;
+    }
 }

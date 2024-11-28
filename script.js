@@ -180,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentX = 0;
         let isDragging = false;
 
+        let touchStartX = 0;
+        let touchEndX = 0;
+
         // Создаем точки для навигации
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
@@ -221,39 +224,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Обработчики для свайпов (мобильные)
-        wrapper.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-            wrapper.style.transition = 'none';
+        wrapper.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
         });
 
-        wrapper.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            
-            currentX = e.touches[0].clientX;
-            const diff = currentX - startX;
-            const offset = -currentSlide * 100 + (diff / wrapper.offsetWidth) * 100;
-            
-            wrapper.style.transform = `translateX(${offset}%)`;
+        wrapper.addEventListener('touchmove', e => {
+            touchEndX = e.touches[0].clientX;
         });
 
         wrapper.addEventListener('touchend', () => {
-            isDragging = false;
-            wrapper.style.transition = 'transform 0.3s ease';
-            
-            const diff = currentX - startX;
-            const threshold = wrapper.offsetWidth * 0.2;
+            const swipeDistance = touchStartX - touchEndX;
+            const threshold = 50; // Минимальное расстояние для свайпа
 
-            if (Math.abs(diff) > threshold) {
-                if (diff > 0 && currentSlide > 0) {
-                    goToSlide(currentSlide - 1);
-                } else if (diff < 0 && currentSlide < slides.length - 1) {
+            if (Math.abs(swipeDistance) > threshold) {
+                if (swipeDistance > 0 && currentSlide < slides.length - 1) {
                     goToSlide(currentSlide + 1);
-                } else {
-                    goToSlide(currentSlide);
+                } else if (swipeDistance < 0 && currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
                 }
-            } else {
-                goToSlide(currentSlide);
             }
         });
 
@@ -497,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Закрытие модаль��ого окна
+    // Закрытие модального окна
     closeModal.addEventListener('click', function() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Возвращаем прокрутку страницы
