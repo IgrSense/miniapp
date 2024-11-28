@@ -670,7 +670,7 @@ h2 {
 .pricing-btn {
     width: 100%;
     padding: 14px 24px;
-    margin-top: 20px;
+    margin-top: 0px;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 500;
@@ -2833,5 +2833,157 @@ body {
 
     .cases-wrapper:active {
         cursor: grabbing;
+    }
+}
+
+    /* Форма обратной связи */
+    .contact-form {
+        margin-top: 30px;
+    }
+
+    .contact-form button[type="submit"] {
+        margin-top: 30px; /* Увеличиваем отступ перед кнопкой */
+    }
+
+    /* Стили для текстовых полей */
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+        margin-bottom: 15px;
+    }
+
+    /* Отступ для textarea */
+    .contact-form textarea {
+        margin-bottom: 30px;
+    }
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Фиксированная стоимость */
+    .condition-card {
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 15px;
+    }
+
+    /* Заголовок и описание */
+    .condition-card h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .condition-card p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* Список с чекпоинтами */
+    .condition-card ul {
+        margin-bottom: 25px;
+    }
+
+    .condition-card ul li {
+        font-size: 14px;
+        padding-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    /* Примеры расчета */
+    .examples-title {
+        font-size: 20px;
+        margin: 25px 0 15px;
+    }
+
+    .example-preview {
+        margin-bottom: 10px;
+    }
+
+    .example-brief {
+        padding: 12px;
+    }
+
+    .example-title {
+        font-size: 14px;
+    }
+
+    .example-brief p {
+        font-size: 14px;
+        margin: 0;
+        padding-right: 10px;
+    }
+
+    /* Кнопка "подробнее" */
+    .details-toggle {
+        padding: 4px 10px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    /* Контейнер с примерами */
+    .pricing-examples {
+        margin: 15px -15px 0;
+        padding: 0 15px;
+    }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .condition-card h3 {
+        font-size: 20px;
+    }
+
+    .example-brief {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .example-brief p {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Блоки калькулятора */
+    .calculator-results .result-card {
+        width: 90%; /* Уменьшаем ширину на 10% */
+        margin: 0 auto 15px; /* Центрируем блоки */
+        padding: 15px;
+    }
+
+    /* Заголовки в блоках */
+    .result-card h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    /* Значения */
+    .estimate-value,
+    .price-value {
+        font-size: 28px;
+        margin: 10px 0;
+    }
+
+    /* Описание под значениями */
+    .result-card p {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    /* Кнопки */
+    .price-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .calc-btn,
+    .order-btn {
+        width: 90%;
+        margin: 0 auto;
+        padding: 12px 20px;
+        font-size: 14px;
     }
 }
