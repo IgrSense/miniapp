@@ -2741,10 +2741,12 @@ body {
     /* Точки навигации */
     .cases-section .slider-dots {
         position: absolute;
-        bottom: -90px;
+        bottom: auto;  /* Убираем bottom позиционирование */
+        top: 85%;     /* Регулируйте это значение чтобы точно попасть в фиолетовую область */
         left: 0;
         right: 0;
-        margin: 10px;
+        z-index: 10;
+        margin: 0;
         padding: 10px 0;
     }
 }
@@ -3059,7 +3061,7 @@ body {
 }
 
 .calculator-summary {
-    background: #1a1a1a; /* Непрозрачный фон чуть светлее */
+    background: #1a1a1a; /* Непрозрачный фон чуть светл��е */
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 20px;
@@ -3495,5 +3497,49 @@ body {
         left: 50%;
         transform: translateX(-50%);
         margin: 0;
+    }
+}
+
+/* Стили для таблицы сравнения на мобильных устройствах */
+@media screen and (max-width: 768px) {
+    .case-description table {
+        font-size: 14px; /* Уменьшаем размер шрифта */
+        width: 100%;
+    }
+
+    .case-description table td,
+    .case-description table th {
+        padding: 8px 6px; /* Уменьшаем отступы */
+    }
+
+    /* Уменьшаем заголовки */
+    .case-description table th {
+        font-size: 16px;
+    }
+
+    /* Делаем текст в ячейках компактнее */
+    .case-description table td {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+    /* Уменьшаем иконки */
+    .case-description table .positive,
+    .case-description table .negative {
+        font-size: 16px;
+    }
+
+    /* Уменьшаем отступы между строками */
+    .case-description table tr {
+        height: 40px; /* или другое подходящее значение */
+    }
+}
+
+/* Для совсем маленьких экранов */
+@media screen and (max-width: 480px) {
+    .case-description table td,
+    .case-description table th {
+        padding: 6px 4px; /* Еще меньше отступы */
+        font-size: 12px; /* Еще меньше шрифт */
     }
 }
