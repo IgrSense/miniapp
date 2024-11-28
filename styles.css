@@ -1006,7 +1006,7 @@ h2 {
     position: relative;
     max-width: 900px;
     margin: 30px auto 0;
-    overflow: hidden;
+    
 }
 
 .cases-wrapper {
@@ -1031,28 +1031,27 @@ h2 {
     opacity: 1;
 }
 
+/* Базовые стили для case-media */
 .case-media {
-    flex: 0 0 25%;
+    flex: 0 0 50%;
     border-radius: 12px;
-    overflow: hidden;
-    max-width: 300px;
+    max-width: 600px;
     height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(18, 18, 18, 0.95);
 }
 
 .case-media video {
     width: 60%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 20px;
 }
 
 .case-content {
     flex: 1;
-    padding: 15px;
+    padding: 15px 0px;
 }
 
 .case-header {
@@ -2549,7 +2548,7 @@ body {
     }
 }
 
-/* Стили для очень маленьких экранов */
+/* Стили для очень маленьких экра��ов */
 @media screen and (max-width: 480px) {
     body {
         min-width: 320px; /* Минимальная ширина для самых маленьких экранов */
@@ -3186,7 +3185,7 @@ body {
         aspect-ratio: 9/16; /* Мобильное соотношение сторон */
         max-height: 60vh;
         border-radius: 16px;
-        overflow: hidden;
+       
     }
 
     .case-media video,
@@ -3340,60 +3339,36 @@ body {
         font-size: 18px;
     }
 }
-
 /* Стили для кейса AI-официант */
-.case-card[data-case="ai-waiter"] .case-media {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
+
+.case-card .case-media video {
+    
+        
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(169 0 111 / 10%);
+}
 }
 
+
+/* Добавляем декоративный фон */
+ 
 .case-card[data-case="ai-waiter"] .case-media video {
-    width: 45%;
-    height: auto;
+    position: relative;
+    z-index: 1;
 }
 
-.case-card[data-case="ai-waiter"] .case-media-slider {
-    width: 45%;
-    height: auto;
-}
-
-/* Стили для кейса Эфирные масла */
-.case-card[data-case="essential-oils"] .case-media {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.case-card[data-case="essential-oils"] .case-media-slider {
-    width: 60%;
-    margin: 0 auto;
-}
-
-/* Мобильные стили для обоих кейсов */
+/* Мобильные стили */
 @media screen and (max-width: 768px) {
     .case-card[data-case="ai-waiter"] .case-media {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 10px;
-        height: auto;
-        aspect-ratio: auto;
+        padding: 5px;
+        aspect-ratio: 9/16;
+        border-radius: 15px;
+        
+
     }
 
-    .case-card[data-case="ai-waiter"] .case-media video,
-    .case-card[data-case="ai-waiter"] .case-media-slider {
-        width: 48%;
-        height: auto;
-    }
+   
 
-    .case-card[data-case="essential-oils"] .case-media {
-        height: auto;
-        aspect-ratio: auto;
-    }
-
-    .case-card[data-case="essential-oils"] .case-media-slider {
-        width: 80%;
-        max-width: 300px;
-    }
+    /* Адаптируем декоративный фон для мобильных */
+   
 }
