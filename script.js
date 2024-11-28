@@ -346,9 +346,9 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 console.log('Sending data:', formData);
                 
-                // Отправляем запросы параллельно на оба вебхука с режимом no-cors
+                // Отправляем запросы параллельно на оба вебхука
                 const responses = await Promise.all([
-                    fetch('http://n8n2.supashkola.ru/webhook/tgappsdev', {
+                    fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
@@ -367,9 +367,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 ]);
 
                 console.log('Responses:', responses);
-
-                // При использовании mode: 'no-cors' мы не можем проверить response.ok
-                // Поэтому просто считаем успешным сам факт отправки
                 contactForm.reset();
                 showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
 
