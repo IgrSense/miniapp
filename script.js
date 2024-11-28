@@ -79,6 +79,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Обновляем преимущества
         updateBenefits(finalPrice);
+
+        // Удалим кнопку заказать
+        document.querySelector('.order-btn')?.remove();
+
+        // Обновим кнопку расчета
+        const calcBtn = document.querySelector('.calc-btn');
+        calcBtn.textContent = 'Получить точный расчет';
+        calcBtn.addEventListener('click', function() {
+            // Собираем данные для модального окна
+            const businessType = document.getElementById('productType');
+            const complexity = document.getElementById('complexity');
+            const urgency = document.getElementById('urgency');
+            const features = Array.from(document.querySelectorAll('input[name="additional"]:checked'))
+                .map(checkbox => checkbox.closest('.feature-option').querySelector('.feature-text').textContent);
+
+            // Заполняем сводку
+            document.getElementById('summaryType').textContent = businessType.options[businessType.selectedIndex].text;
+            document.getElementById('summaryComplexity').textContent = complexity.options[complexity.selectedIndex].text;
+            document.getElementById('summaryUrgency').textContent = urgency.options[urgency.selectedIndex].text;
+            document.getElementById('summaryFeatures').textContent = features.length ? features.join(', ') : 'Нет';
+            document.getElementById('summaryPrice').textContent = document.querySelector('.price-value').textContent;
+
+            // Сохраняем данные для отправки
+            document.getElementById('calculatedPrice').value = finalPrice;
+            document.getElementById('calculatorParams').value = JSON.stringify({
+                businessType: businessType.value,
+                complexity: complexity.value,
+                urgency: urgency.value,
+                features: features,
+                price: finalPrice
+            });
+
+            // Показываем модальное окно
+            const modal = document.getElementById('calculatorModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
     }
 
     function updateBenefits(price) {
@@ -427,4 +464,162 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Добавляем обработчик для кнопки "Обсудить проект"
+    const discussButton = document.querySelector('.services-cta .cta-button');
+    
+    discussButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        const contactForm = document.getElementById('contact');
+        contactForm.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Обработка кнопок выбора тарифа
+    const tariffButtons = document.querySelectorAll('.pricing-btn');
+    const modal = document.getElementById('tariffModal');
+    const closeModal = document.querySelector('.close-modal');
+    const modalForm = document.querySelector('.modal-form');
+
+    tariffButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const tariffCard = this.closest('.pricing-card');
+            const tariffName = tariffCard.querySelector('h3').textContent;
+            const tariffPrice = tariffCard.querySelector('.price-amount').textContent;
+            
+            // Заполняем информацию о выбранном тарифе
+            document.querySelector('.selected-tariff span').textContent = `${tariffName} (${tariffPrice})`;
+            document.getElementById('selectedTariff').value = tariffName;
+            
+            // Показываем модальное окно
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+        });
+    });
+
+    // Закрытие модаль��ого окна
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Возвращаем прокрутку страницы
+    });
+
+    // Закрытие по клику вне модального окна
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Обработка отправки формы из модального окна
+    modalForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            tariff: document.getElementById('selectedTariff').value,
+            telegram: this.querySelector('input[name="telegram"]').value,
+            email: this.querySelector('input[name="email"]').value,
+            phone: this.querySelector('input[name="phone"]').value,
+            message: this.querySelector('textarea[name="message"]').value,
+            source: 'tariff_modal',
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            // Отправляем запросы параллельно на оба вебхука
+            const responses = await Promise.all([
+                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                }),
+                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+            ]);
+
+            modalForm.reset();
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
+
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Произошла ошибка. Пожалуйста, попробуйте позже.', 'error');
+        }
+    });
+
+    // Добавим обработчики для модального окна калькулятора
+    const calculatorModal = document.getElementById('calculatorModal');
+    const closeCalculatorModal = calculatorModal.querySelector('.close-modal');
+    const calculatorForm = calculatorModal.querySelector('.modal-form');
+
+    // Закрытие по крестику
+    closeCalculatorModal.addEventListener('click', function() {
+        calculatorModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Закрытие по клику вне окна
+    window.addEventListener('click', function(e) {
+        if (e.target === calculatorModal) {
+            calculatorModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Обработка отправки формы
+    calculatorForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            calculatedPrice: document.getElementById('calculatedPrice').value,
+            calculatorParams: JSON.parse(document.getElementById('calculatorParams').value),
+            telegram: this.querySelector('input[name="telegram"]').value,
+            email: this.querySelector('input[name="email"]').value,
+            phone: this.querySelector('input[name="phone"]').value,
+            message: this.querySelector('textarea[name="message"]').value,
+            source: 'calculator_modal',
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            // Отправляем запросы параллельно на оба вебхука
+            const responses = await Promise.all([
+                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                }),
+                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+            ]);
+
+            calculatorForm.reset();
+            calculatorModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
+
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Произошла ошибка. Пожалуйста, попробуйте позже.', 'error');
+        }
+    });
 }); 

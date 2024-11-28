@@ -2416,7 +2416,7 @@ h2 {
     border-left: 1px solid rgba(255, 217, 141, 0.1);
 }
 
-/* Анимация при наведении */
+/* Анимация ��ри наведении */
 .feature-option:hover input[type="checkbox"] {
     border-color: rgba(255, 217, 141, 0.5);
 }
@@ -2963,4 +2963,195 @@ body {
     .price-value {
         font-size: 36px;
     }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--color-background);
+    margin: 5% auto; /* Уменьшаем с 8% до 5% */
+    padding: 30px; /* Немного уменьшаем padding */
+    border-radius: 24px;
+    width: 90%;
+    max-width: 450px; /* Уменьшаем максимальную ширину */
+    max-height: 90vh; /* Ограничиваем максимальную высоту */
+    overflow-y: auto; /* Добавляем скролл если контент не влезает */
+    animation: modalSlideIn 0.3s ease;
+    border: 1px solid var(--color-gold);
+    box-shadow: 0 0 30px rgba(253, 215, 130, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-70px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+.close-modal:hover {
+    color: var(--color-gold);
+}
+
+.selected-tariff {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--color-card);
+    border-radius: 12px;
+    color: var(--color-gold);
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Уменьшаем отступы между элементами */
+}
+
+.modal-form input,
+.modal-form textarea {
+    width: 100%;
+    padding: 10px; /* Немного уменьшаем padding полей ввода */
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-input);
+    color: var(--color-text);
+}
+
+.modal-form .cta-button {
+    width: 100%;
+}
+
+.calculator-summary {
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.summary-value {
+    color: var(--color-gold);
+    font-weight: 500;
+}
+
+.summary-item.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-gold);
+}
+
+.summary-item.total .summary-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Стилизация кнопки калькулятора */
+.calc-btn {
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-gold);
+    background: rgba(253, 215, 130, 0.05);
+    border: 2px solid var(--color-gold);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(253, 215, 130, 0.1);
+}
+
+.calc-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(253, 215, 130, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(253, 215, 130, 0.2);
+    background: rgba(253, 215, 130, 0.1);
+}
+
+.calc-btn:hover::before {
+    left: 100%;
+}
+
+.calc-btn:active {
+    transform: translateY(1px);
+}
+
+/* Добавляем медиа-запрос для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        padding: 25px;
+        width: 95%;
+    }
+}
+
+/* Стилизуем скролл для модального окна */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
 }
