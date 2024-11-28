@@ -132,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function initCasesSlider() {
         const wrapper = document.querySelector('.cases-wrapper');
         const slides = document.querySelectorAll('.case-card');
+        const prevBtn = document.querySelector('.slider-prev');
+        const nextBtn = document.querySelector('.slider-next');
         const dotsContainer = document.querySelector('.slider-dots');
         
         if (!wrapper || !slides.length) return;
@@ -151,6 +153,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function goToSlide(index) {
+            // Проверяем валидность индекса
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+
             slides[currentSlide].style.opacity = '0';
             slides[currentSlide].classList.remove('active');
             
@@ -166,7 +172,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Обработчики для свайпов
+        // Обработчики для стрелок (десктоп)
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+        }
+
+        // Обработчики для свайпов (мобильные)
         wrapper.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             isDragging = true;
@@ -188,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
             wrapper.style.transition = 'transform 0.3s ease';
             
             const diff = currentX - startX;
-            const threshold = wrapper.offsetWidth * 0.2; // 20% экрана для свайпа
+            const threshold = wrapper.offsetWidth * 0.2;
 
             if (Math.abs(diff) > threshold) {
                 if (diff > 0 && currentSlide > 0) {
@@ -205,6 +222,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Показываем первый слайд
         goToSlide(0);
+
+        // Добавляем управление с клавиатуры
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                goToSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight') {
+                goToSlide(currentSlide + 1);
+            }
+        });
     }
 
     // Инициализируем калькулятор и слайдер
