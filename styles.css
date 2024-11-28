@@ -2049,7 +2049,7 @@ h2 {
     padding: 25px;
     transition: all 0.3s ease;
     position: relative;
-    padding-bottom: 70px;
+    padding-bottom: 80px; /* Увеличиваем отступ снизу для кнопки */
 }
 
 .service-card:hover {
@@ -2329,7 +2329,7 @@ h2 {
 
 .service-card .case-button {
     position: absolute;
-    bottom: 25px;
+    bottom: 25px; /* Было 25px */
     left: 25px;
     right: 25px;
     text-align: center;
@@ -2338,7 +2338,7 @@ h2 {
 .service-card::before {
     content: '';
     position: absolute;
-    bottom: 65px;
+    bottom: 65px; /* Было 65px */
     left: 25px;
     right: 25px;
     height: 1px;
@@ -2595,7 +2595,7 @@ body {
         max-width: 100%;
     }
 
-    /* Растягиваем хедер */
+    /* Растягив��ем хедер */
     header.header {
         width: 100vw;
         left: 0;
@@ -2986,25 +2986,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8); /* Более темный фон */
     z-index: 1000;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 }
 
 .modal-content {
     position: relative;
-    background-color: var(--color-background);
-    margin: 5% auto; /* Уменьшаем с 8% до 5% */
-    padding: 30px; /* Немного уменьшаем padding */
+    background-color: #121212; /* Непрозрачный темный фон */
+    margin: 5% auto;
+    padding: 30px;
     border-radius: 24px;
     width: 90%;
-    max-width: 450px; /* Уменьшаем максимальную ширину */
-    max-height: 90vh; /* Ограничиваем максимальную высоту */
-    overflow-y: auto; /* Добавляем скролл если контент не влезает */
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
     animation: modalSlideIn 0.3s ease;
     border: 1px solid var(--color-gold);
     box-shadow: 0 0 30px rgba(253, 215, 130, 0.1);
-    backdrop-filter: blur(10px);
 }
 
 @keyframes modalSlideIn {
@@ -3034,7 +3033,7 @@ body {
 .selected-tariff {
     margin-bottom: 20px;
     padding: 15px;
-    background: var(--color-card);
+    background: #1a1a1a; /* Непрозрачный фон */
     border-radius: 12px;
     color: var(--color-gold);
 }
@@ -3051,7 +3050,7 @@ body {
     padding: 10px; /* Немного уменьшаем padding полей ввода */
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    background: var(--color-input);
+    background: #1a1a1a; /* Непрозрачный фон для полей ввода */
     color: var(--color-text);
 }
 
@@ -3060,7 +3059,7 @@ body {
 }
 
 .calculator-summary {
-    background: rgba(18, 18, 18, 0.95);
+    background: #1a1a1a; /* Непрозрачный фон чуть светлее */
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 20px;
@@ -3346,26 +3345,25 @@ body {
 .case-card[data-case="ai-waiter"] .case-media {
     display: flex;
     gap: 20px;
-    flex: 0 0 50%; /* Увеличиваем ширину медиа-контейнера */
-    max-width: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .case-card[data-case="ai-waiter"] .case-media video {
-    width: 45%; /* Видео занимает 45% от медиа-контейнера */
+    width: 45%;
     height: auto;
-    object-fit: contain;
 }
 
 .case-card[data-case="ai-waiter"] .case-media-slider {
-    width: 45%; /* Слайдер занимает 45% от медиа-контейнера */
+    width: 45%;
+    height: auto;
 }
 
-/* Стили для кейса эфирных масел */
+/* Стили для кейса Эфирные масла */
 .case-card[data-case="essential-oils"] .case-media {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 0 0 40%;
 }
 
 .case-card[data-case="essential-oils"] .case-media-slider {
@@ -3373,26 +3371,29 @@ body {
     margin: 0 auto;
 }
 
-.case-card[data-case="essential-oils"] .case-slide {
-    margin: 0 auto;
-}
-
-/* Медиа-запросы для мобильных устройств */
+/* Мобильные стили для обоих кейсов */
 @media screen and (max-width: 768px) {
-    /* AI-официант на мобильных */
     .case-card[data-case="ai-waiter"] .case-media {
-        flex-direction: column;
-        gap: 15px;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 10px;
+        height: auto;
+        aspect-ratio: auto;
     }
 
     .case-card[data-case="ai-waiter"] .case-media video,
     .case-card[data-case="ai-waiter"] .case-media-slider {
-        width: 80%;
+        width: 48%;
+        height: auto;
     }
 
-    /* Эфирные масла на мобильных */
+    .case-card[data-case="essential-oils"] .case-media {
+        height: auto;
+        aspect-ratio: auto;
+    }
+
     .case-card[data-case="essential-oils"] .case-media-slider {
         width: 80%;
+        max-width: 300px;
     }
 }
