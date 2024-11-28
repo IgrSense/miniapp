@@ -2329,7 +2329,7 @@ h2 {
 
 .service-card .case-button {
     position: absolute;
-    bottom: 25px; /* Было 25px */
+    bottom: 5px; /* Было 25px */
     left: 25px;
     right: 25px;
     text-align: center;
