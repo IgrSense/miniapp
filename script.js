@@ -132,53 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function initCasesSlider() {
         const wrapper = document.querySelector('.cases-wrapper');
         const slides = document.querySelectorAll('.case-card');
-        const prevBtn = document.querySelector('.slider-prev');
-        const nextBtn = document.querySelector('.slider-next');
         const dotsContainer = document.querySelector('.slider-dots');
         
         if (!wrapper || !slides.length) return;
 
-        const SLIDE_DURATION = 10000; // 10 секунд на слайд
         let currentSlide = 0;
-        let progressBar;
-        
-        // Создаем и добавляем индикатор прогресса
-        function createProgressBar() {
-            progressBar = document.createElement('div');
-            progressBar.classList.add('slider-progress');
-            
-            const progressBarInner = document.createElement('div');
-            progressBarInner.classList.add('slider-progress-inner');
-            
-            progressBar.appendChild(progressBarInner);
-            wrapper.parentElement.appendChild(progressBar);
-        }
-        
-        // Обновляем прогресс-бар
-        function updateProgress(reset = false) {
-            const progressInner = progressBar.querySelector('.slider-progress-inner');
-            progressInner.style.transition = reset ? 'none' : `width ${SLIDE_DURATION}ms linear`;
-            progressInner.style.width = reset ? '0%' : '100%';
-            
-            if (reset) {
-                // Форсируем перерисовку
-                progressInner.offsetHeight;
-                progressInner.style.transition = `width ${SLIDE_DURATION}ms linear`;
-                progressInner.style.width = '100%';
-            }
-        }
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
 
-        // Показываем первый слайд и скрываем остальные
-        slides.forEach((slide, index) => {
-            if (index === 0) {
-                slide.style.opacity = '1';
-                slide.classList.add('active');
-            } else {
-                slide.style.opacity = '0';
-            }
-        });
-        
-        // Создаем точки навигации
+        // Создаем точки для навигации
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
             dot.classList.add('slider-dot');
@@ -186,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.addEventListener('click', () => goToSlide(index));
             dotsContainer.appendChild(dot);
         });
-        
+
         function goToSlide(index) {
             slides[currentSlide].style.opacity = '0';
             slides[currentSlide].classList.remove('active');
@@ -197,46 +160,51 @@ document.addEventListener('DOMContentLoaded', function() {
             slides[currentSlide].classList.add('active');
             wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
             
-            // Обновляем точки и прогресс
+            // Обновляем точки
             document.querySelectorAll('.slider-dot').forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === currentSlide);
             });
-            updateProgress(true);
         }
-        
-        function nextSlide() {
-            goToSlide((currentSlide + 1) % slides.length);
-        }
-        
-        function prevSlide() {
-            goToSlide((currentSlide - 1 + slides.length) % slides.length);
-        }
-        
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-        
-        // Создаем прогресс-бар
-        createProgressBar();
-        updateProgress(true);
-        
-        // Автопереключение
-        let slideInterval = setInterval(() => {
-            nextSlide();
-        }, SLIDE_DURATION);
-        
-        // Пауза при наведении
-        wrapper.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
-            const progressInner = progressBar.querySelector('.slider-progress-inner');
-            progressInner.style.animationPlayState = 'paused';
+
+        // Обработчики для свайпов
+        wrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            wrapper.style.transition = 'none';
         });
-        
-        wrapper.addEventListener('mouseleave', () => {
-            updateProgress(true);
-            slideInterval = setInterval(() => {
-                nextSlide();
-            }, SLIDE_DURATION);
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            currentX = e.touches[0].clientX;
+            const diff = currentX - startX;
+            const offset = -currentSlide * 100 + (diff / wrapper.offsetWidth) * 100;
+            
+            wrapper.style.transform = `translateX(${offset}%)`;
         });
+
+        wrapper.addEventListener('touchend', () => {
+            isDragging = false;
+            wrapper.style.transition = 'transform 0.3s ease';
+            
+            const diff = currentX - startX;
+            const threshold = wrapper.offsetWidth * 0.2; // 20% экрана для свайпа
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
+                } else if (diff < 0 && currentSlide < slides.length - 1) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide);
+                }
+            } else {
+                goToSlide(currentSlide);
+            }
+        });
+
+        // Показываем первый слайд
+        goToSlide(0);
     }
 
     // Инициализируем калькулятор и слайдер
