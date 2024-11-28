@@ -3169,7 +3169,7 @@ body {
     border-radius: 4px;
 }
 
-/* Обновленные стили для кейсов на мобильных устройс��вах */
+/* Обновленные стили для кейсов на мобильных устройс����вах */
 @media screen and (max-width: 768px) {
     .case-card {
         flex-direction: column;
@@ -3358,7 +3358,7 @@ body {
     z-index: 1;
 }
 
-/* Мобильные стили */
+/* Мобильные ст��ли */
 @media screen and (max-width: 768px) {
     .case-card[data-case="ai-waiter"] .case-media {
         padding: 5px;
@@ -3440,5 +3440,60 @@ body {
     /* Убираем старый индикатор свайпа */
     .cases-wrapper::after {
         display: none;
+    }
+}
+
+/* Стили для мобильной версии кейса про масла */
+@media screen and (max-width: 768px) {
+    .case-card[data-case="ai-waiter"] .case-media {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 70vh;
+        width: 100%;
+        position: relative;
+    }
+
+    .case-card[data-case="ai-waiter"] .case-media video {
+        width: 55%;
+        height: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+    }
+
+    /* Общие стили для всех кейсов на мобильных */
+    .case-media {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 0;
+    }
+
+    .case-media video,
+    .case-media img {
+        width: 55%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+    }
+
+    /* Убираем все возможные смещения */
+    .case-card .case-media video {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
     }
 }
