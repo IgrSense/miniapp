@@ -210,6 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.slider-dot').forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === currentSlide);
             });
+
+            // Сбрасываем значения touchStart и touchEnd после каждого слайда
+            touchStartX = 0;
+            touchEndX = 0;
         }
 
         // Обработчики для стрелок (десктоп)
@@ -226,10 +230,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обработчики для свайпов (мобильные)
         wrapper.addEventListener('touchstart', e => {
             touchStartX = e.touches[0].clientX;
+            e.preventDefault(); // Предотвращаем стандартное поведение
         });
 
         wrapper.addEventListener('touchmove', e => {
             touchEndX = e.touches[0].clientX;
+            e.preventDefault(); // Предотвращаем стандартное поведение
         });
 
         wrapper.addEventListener('touchend', () => {
