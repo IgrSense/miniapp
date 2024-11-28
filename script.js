@@ -320,4 +320,121 @@ document.addEventListener('DOMContentLoaded', function() {
             button.textContent = details.classList.contains('active') ? 'скрыть' : 'подробнее';
         });
     });
+
+    // Добавляем обработчик отправки формы
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        console.log('Form found:', contactForm); // Проверяем, находит ли форму
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Form submitted'); // Проверяем, срабатывает ли событие
+            
+            // Получаем значения полей
+            const productType = document.getElementById('productType')?.value;
+            const telegram = document.querySelector('input[name="telegram"]')?.value;
+            const email = document.querySelector('input[name="email"]')?.value;
+            const phone = document.querySelector('input[name="phone"]')?.value;
+            const message = document.querySelector('textarea[name="message"]')?.value;
+
+            console.log('Form data:', { productType, telegram, email, phone, message }); // Проверяем данные
+
+            // Создаем объект с данными формы
+            const formData = {
+                productType,
+                telegram,
+                email,
+                phone,
+                message,
+                source: 'landing_form',
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                console.log('Sending data:', formData);
+                
+                // Отправляем запросы параллельно на оба вебхука с режимом no-cors
+                const responses = await Promise.all([
+                    fetch('http://n8n2.supashkola.ru/webhook/tgappsdev', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    }),
+                    fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                ]);
+
+                console.log('Responses:', responses);
+
+                // При использовании mode: 'no-cors' мы не можем проверить response.ok
+                // Поэтому просто считаем успешным сам факт отправки
+                contactForm.reset();
+                showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Произошла ошибка. Пожалуйста, попробуйте позже.', 'error');
+            }
+        });
+    } else {
+        console.error('Contact form not found'); // Если форма не найдена
+    }
+
+    // Функция для показа уведомлений
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        // Добавляем стили для уведомления
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.padding = '15px 25px';
+        notification.style.borderRadius = '12px';
+        notification.style.zIndex = '1000';
+        notification.style.animation = 'slideIn 0.3s ease';
+        
+        if (type === 'success') {
+            notification.style.background = 'rgba(76, 175, 80, 0.9)';
+        } else {
+            notification.style.background = 'rgba(244, 67, 54, 0.9)';
+        }
+        
+        document.body.appendChild(notification);
+
+        // Удаляем уведомление через 5 секунд
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 5000);
+    }
+
+    // Добавляем обработчик на кнопку
+    const submitButton = document.querySelector('.contact-form button[type="submit"]');
+    if (submitButton) {
+        submitButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = this.closest('.contact-form');
+            if (form) {
+                // Создаем и диспатчим событие submit
+                const submitEvent = new Event('submit', {
+                    bubbles: true,
+                    cancelable: true
+                });
+                form.dispatchEvent(submitEvent);
+            }
+        });
+    }
 }); 
