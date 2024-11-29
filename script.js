@@ -412,15 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(formData)
-                    }), 
-                    fetch('https://igr.app.n8n.cloud/webhook/miniapp', {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    }),
+                    })
                 ]);
 
                 console.log('Responses:', responses);
@@ -702,42 +694,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Отправка данных на сервер
     function sendVisitorData(data) {
-        // Отправляем запросы параллельно на все вебхуки
-        Promise.all([
-            fetch('https://n8n2.supashkola.ru/webhook/tgappsdev.old', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...data,
-                    source: 'visitor_analytics'
-                })
-            }),
-            fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...data,
-                    source: 'visitor_analytics'
-                })
-            }),
-            fetch('https://igr.app.n8n.cloud/webhook/miniapp', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...data,
-                    source: 'visitor_analytics'
-                })
-            })
-        ]).catch(error => console.error('Analytics Error:', error));
+        fetch('https://your-analytics-endpoint.com/collect', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
     }
 
     // Запускаем сбор данных при загрузке страницы
