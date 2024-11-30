@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Обновляем обработчики для кнопок
         prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Предотвращаем всплытие событ��я
+            e.stopPropagation(); // Предотвращаем всплытие события
             goToSlide(currentSlide - 1);
         });
 
@@ -399,17 +399,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 const responses = await Promise.all([
                     fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Accept': 'application/json'
                         },
                         body: JSON.stringify(formData)
                     }),
                     fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Accept': 'application/json'
                         },
                         body: JSON.stringify(formData)
                     })
@@ -542,17 +542,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const responses = await Promise.all([
                 fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 }),
                 fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 })
@@ -608,17 +608,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const responses = await Promise.all([
                 fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 }),
                 fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 })
@@ -693,30 +693,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Отправка данных на сервер
-    function sendVisitorData(data) {
-        // Отправляем на оба вебхука
-        Promise.all([
-            fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }),
-            fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-        ]).then(responses => {
+    async function sendVisitorData(data) {
+        try {
+            // Отправляем запросы параллельно на оба вебхука
+            const responses = await Promise.all([
+                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }),
+                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+            ]);
+
             console.log('Data sent successfully:', data);
-        }).catch(error => {
+            return responses;
+        } catch (error) {
             console.error('Error sending data:', error);
-        });
+            throw error;
+        }
     }
 
     // Запускаем сбор данных при загрузке страницы
