@@ -367,65 +367,57 @@ document.addEventListener('DOMContentLoaded', function() {
     // Добавляем обработчик отправки формы
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
-        console.log('Form found:', contactForm); // Проверяем, находит ли форму
-
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Получаем значения полей
-            const productType = document.getElementById('productType')?.value;
-            const telegram = document.querySelector('input[name="telegram"]')?.value;
-            const email = document.querySelector('input[name="email"]')?.value;
-            const phone = document.querySelector('input[name="phone"]')?.value;
-            const message = document.querySelector('textarea[name="message"]')?.value || '';
-
-            // Создаем объект с данными формы
+            // Получаем значения всех полей
             const formData = {
-                productType,
-                telegram,
-                email,
-                phone,
-                message,
+                productType: this.querySelector('select[name="product"]').value || '',
+                telegram: this.querySelector('input[name="telegram"]').value || '',
+                email: this.querySelector('input[name="email"]').value || '',
+                phone: this.querySelector('input[name="phone"]').value || '',
+                message: this.querySelector('textarea[name="message"]').value || '',
                 source: 'landing_form',
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                screenResolution: `${window.screen.width}x${window.screen.height}`,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                referrer: document.referrer
             };
 
-            console.log('Sending form data:', formData); // Добавляем лог для отладки
+            console.log('Отправляемые данные:', formData);
 
             try {
-                console.log('Sending data:', formData);
-                
-                // Отправляем запросы параллельно на оба вебхука
-                const responses = await Promise.all([
-                    fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    }),
-                    fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
+                const response = await fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        // Упрощаем структуру данных
+                        type: formData.productType,
+                        telegram: formData.telegram,
+                        email: formData.email,
+                        phone: formData.phone,
+                        message: formData.message,
+                        source: formData.source
                     })
-                ]);
+                });
 
-                console.log('Responses:', responses);
+                console.log('Ответ сервера:', response);
+                
+                // В режиме no-cors мы не можем проверить response.ok
                 contactForm.reset();
                 showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Ошибка при отправке:', error);
                 showNotification('Произошла ошибка. Пожалуйста, попробуйте позже.', 'error');
             }
         });
-    } else {
-        console.error('Contact form not found'); // Если форма не найдена
     }
 
     // Функция для показа уведомлений
@@ -604,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         try {
-            // Отправляем запросы параллельно на оба вебхука
+            // Отправлям запросы параллельно на оба вебхука
             const responses = await Promise.all([
                 fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
@@ -693,34 +685,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Отправка данных на сервер
-    async function sendVisitorData(data) {
-        try {
-            // Отправляем запросы параллельно на оба вебхука
-            const responses = await Promise.all([
-                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }),
-                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-            ]);
-
-            console.log('Data sent successfully:', data);
-            return responses;
-        } catch (error) {
-            console.error('Error sending data:', error);
-            throw error;
-        }
+    function sendVisitorData(data) {
+        fetch('https://your-analytics-endpoint.com/collect', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
     }
 
     // Запускаем сбор данных при загрузке страницы
