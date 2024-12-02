@@ -3543,3 +3543,26 @@ body {
         font-size: 12px; /* Еще меньше шрифт */
     }
 }
+
+/* Специальные стили для видео AI примерочной */
+.case-card .case-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+@media screen and (max-width: 768px) {
+    .case-card .case-media {
+        height: 70vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .case-card .case-media video {
+        width: 55%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
