@@ -1035,7 +1035,6 @@ h2 {
 .case-media {
     flex: 0 0 50%;
     border-radius: 12px;
-    max-width: 600px;
     height: 500px;
     display: flex;
     align-items: center;
