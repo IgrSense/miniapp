@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Отправляемые данные:', formData);
 
             try {
-                const response = await fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                const response = await fetch('https://n8n2supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Отправляем запросы параллельно на оба вебхука
             const responses = await Promise.all([
-                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                fetch('https://n8n2supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify(formData)
                 }),
-                fetch('https://igr.app.n8n.cloud/webhook/tgappsdev', {
+                fetch('https://igr1.app.n8n.cloud/webhook-test/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Отправлям запросы параллельно на оба вебхука
             const responses = await Promise.all([
-                fetch('https://n8n2.supashkola.ru/webhook/tgappsdev', {
+                fetch('https://n8n2supashkola.ru/webhook/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify(formData)
                 }),
-                fetch('https://igr.app.n8n.cloud/webhook/tgappsdev', {
+                fetch('https://igr1.app.n8n.cloud/webhook-test/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
