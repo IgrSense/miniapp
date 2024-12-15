@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify(formData)
                 }),
-                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                fetch('https://igr.app.n8n.cloud/webhook/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify(formData)
                 }),
-                fetch('https://webhook.site/69fadba3-8cda-4c6f-92de-8b3a0c8cb35c', {
+                fetch('https://igr.app.n8n.cloud/webhook/tgappsdev', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
